@@ -18,6 +18,6 @@ from django.urls import path, include
 
 
 urlpatterns = [
-    path('openvpn', include('OpenVPNApp.urls')),
+    path('openvpn/', include('OpenVPNApp.urls')),
     path('admin/', admin.site.urls),
 ]
