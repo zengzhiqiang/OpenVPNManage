@@ -13,7 +13,7 @@ def index(request):
 
 def restart(request):
     print("重启服务")
-    os.system(r'../etc/openvpn/openvpn.run')
+    os.system(r'/etc/openvpn/openvpn.run')
     return HttpResponse("服务重启成功！")
 
 def download_config_file(request):
@@ -29,5 +29,5 @@ def change_port(request):
 
 def start(request):
     print("启动服务")
-    os.system(r'../etc/openvpn/openvpn.run')
+    os.system(r'/etc/openvpn/openvpn.run')
     return HttpResponse("服务启动成功！")
