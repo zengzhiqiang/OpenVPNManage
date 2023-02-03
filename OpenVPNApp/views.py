@@ -71,10 +71,10 @@ def create_client_config_file():
     with open(r"setting.json", "r", encoding="UTF-8") as f:
         content = f.readlines()
         config_file = eval("".join(content))
-    with open(r"media\client-one.ovpn", "r", encoding="UTF-8") as f:
+    with open(r"media/client-one.ovpn", "r", encoding="UTF-8") as f:
         config_file_content = f.readlines()
         config_file_content.append("remote " + config_file["ip"] + " " + str(config_file["port"]))
-    with open(r"media\client.ovpn", "w", encoding="UTF-8") as f:
+    with open(r"media/client.ovpn", "w", encoding="UTF-8") as f:
         f.write("".join(config_file_content))
     
 def create_server_config_file(port=None):
