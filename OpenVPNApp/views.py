@@ -47,7 +47,7 @@ def change_port(request):
         content = f.readlines()
         config_file = eval("".join(content))
     os.system("ufw allow " + str(config_file["port"]))
-    return HttpResponse("端口修改成功！")
+    return HttpResponse("端口修改成功！" + str(config_file["port"]))
 
 def start(request):
     print("启动服务")
