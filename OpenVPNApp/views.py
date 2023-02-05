@@ -1,3 +1,6 @@
+# 这是一个小小的里程碑，
+# 因为我已经解决了关闭服务-更换端口-修改配置文件-重启服务的完整流程
+
 from django.shortcuts import render
 
 from django.core.files import File
@@ -26,7 +29,7 @@ def restart(request):
 
 def download_config_file(request):
     print("下载配置文件")
-    filepath=(r"media\client.ovpn")
+    filepath=(r"\home\OpenvpnManage\OpenVPNManage\media\client.ovpn")
     f = open(filepath, "rb")
     response = FileResponse(f)
     f.close
@@ -35,6 +38,7 @@ def download_config_file(request):
     return response
 
 def start_openvpn_fun():
+    # 运行linux重启服务的脚本
     os.system(r'/etc/openvpn/startopenvpn.sh')
 
 def change_port(request):
