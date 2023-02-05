@@ -42,7 +42,7 @@ def change_port(request):
     create_server_config_file()
     print("重启服务")
     os.system(r'/etc/openvpn/killopenvpn.sh')
-    start_openvpn_thread = threading.Thread(start_openvpn_fun)
+    start_openvpn_thread = threading.Thread(target=start_openvpn_fun)
     start_openvpn_thread.start()
     print("修改客户端配置文件")
     create_client_config_file()
