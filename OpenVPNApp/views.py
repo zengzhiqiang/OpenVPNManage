@@ -8,6 +8,8 @@ import os
 
 import subprocess
 
+import threading
+
 
 # Create your views here.
 
@@ -32,12 +34,16 @@ def download_config_file(request):
     response["Content-Disposition"] = "attachment; filename=" + os.path.basename(filepath)
     return response
 
+def start_openvpn_fun():
+    os.system(r'/etc/openvpn/startopenvpn.sh')
+
 def change_port(request):
     print("修改服务端配置文件的运行端口")
     create_server_config_file()
     print("重启服务")
     os.system(r'/etc/openvpn/killopenvpn.sh')
-    os.system(r'/etc/openvpn/startopenvpn.sh')
+    start_openvpn_thread = threading.Thread(start_openvpn_fun)
+    start_openvpn_thread.start()
     print("修改客户端配置文件")
     create_client_config_file()
     print("开启防火墙")
@@ -46,7 +52,6 @@ def change_port(request):
     with open(r"setting.json", "r", encoding="UTF-8") as f:
         content = f.readlines()
         config_file = eval("".join(content))
-    os.system("ufw allow " + str(config_file["port"]))
     return HttpResponse("端口修改成功！" + str(config_file["port"]))
 
 def start(request):
