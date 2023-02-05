@@ -29,7 +29,7 @@ def restart(request):
 
 def download_config_file(request):
     print("下载配置文件")
-    filepath=(r"\home\OpenvpnManage\OpenVPNManage\media\client.ovpn")
+    filepath=(r"/home/OpenvpnManage/OpenVPNManage/media/client.ovpn")
     f = open(filepath, "rb")
     response = FileResponse(f)
     f.close
