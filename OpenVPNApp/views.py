@@ -19,7 +19,7 @@ import threading
 # Create your views here.
 
 def index(request):
-    template = loader.get_template(r"OpenVPNApp\index.html")
+    template = loader.get_template(r"OpenVPNApp/index.html")
     with open(r"setting.json", "r", encoding="UTF-8") as f:
         content = f.readlines()
         config_file = eval("".join(content))
