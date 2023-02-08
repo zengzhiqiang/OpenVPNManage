@@ -116,7 +116,7 @@ def create_server_config_file(port=None):
     with open(r"media/server-one.conf", "r", encoding="UTF-8") as f:
         config_file_content = f.readlines()
         config_file_content.append("port "+ str(config_file["port"]))
-    with open(r"/etc/openvpn/server.conf", "w", encoding="UTF-8") as f:
+    with open(r"/etc/openvpn/server_auto.conf", "w", encoding="UTF-8") as f:
         f.write("".join(config_file_content))
         
     with open(r"setting.json", "w", encoding="UTF-8") as f:
