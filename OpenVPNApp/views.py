@@ -62,10 +62,14 @@ def change_port(request):
     print("开启防火墙")
     config_file = {
     }
+    template = loader.get_template(r"OpenVPNApp/index.html")
     with open(r"setting.json", "r", encoding="UTF-8") as f:
         content = f.readlines()
         config_file = eval("".join(content))
-    return HttpResponse("端口修改成功！" + str(config_file["port"]))
+    context = {
+        "port": str(config_file["port"])
+    }
+    return HttpResponse(template.render(context, request))
 
 def start(request):
     print("启动服务")
