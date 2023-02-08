@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-5srn!+cs#q-a-nm!0^zu1q5n&_2)=b&yq7(_i2g1qp)&wf=f7#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["39.100.140.139"]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 我自己的app
+    'OpenVPNApp'
 ]
 
 MIDDLEWARE = [
@@ -121,3 +123,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+if __name__=="__main__":
+    print(BASE_DIR)

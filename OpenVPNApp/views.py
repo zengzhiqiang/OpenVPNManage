@@ -7,6 +7,8 @@ from django.core.files import File
 
 from django.http import HttpResponse, FileResponse
 
+from django.template import loader
+
 import os
 
 import subprocess
@@ -17,7 +19,14 @@ import threading
 # Create your views here.
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+    template = loader.get_template(r"OpenVPNApp\index.html")
+    with open(r"setting.json", "r", encoding="UTF-8") as f:
+        content = f.readlines()
+        config_file = eval("".join(content))
+    context = {
+        "port": str(config_file["port"])
+    }
+    return HttpResponse(template.render(context, request))
 
 def restart(request):
     print("重启服务")
