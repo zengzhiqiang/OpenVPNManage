@@ -35,7 +35,14 @@ def restart(request):
     os.system(r'/etc/openvpn/killopenvpn.sh')
     start_openvpn_thread = threading.Thread(target=start_openvpn_fun)
     start_openvpn_thread.start()
-    return HttpResponse("服务重启成功！")
+    template = loader.get_template(r"OpenVPNApp/index.html")
+    with open(r"setting.json", "r", encoding="UTF-8") as f:
+        content = f.readlines()
+        config_file = eval("".join(content))
+    context = {
+        "port": str(config_file["port"])
+    }
+    return HttpResponse(template.render(context, request))
 
 def download_config_file(request):
     print("下载配置文件")
