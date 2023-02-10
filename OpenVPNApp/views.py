@@ -1,4 +1,4 @@
-#coding=utf-8
+# coding=utf-8
 # 这是一个小小的里程碑，
 # 因为我已经解决了关闭服务-更换端口-修改配置文件-重启服务的完整流程
 
@@ -11,8 +11,6 @@ from django.http import HttpResponse, FileResponse
 from django.template import loader
 
 import os
-
-import subprocess
 
 import threading
 
@@ -74,14 +72,6 @@ def change_port(request):
     }
     return HttpResponse(template.render(context, request))
 
-def start(request):
-    print("启动服务")
-    '''
-    启动openvpn服务
-    '''
-    subprocess.Popen(r'/etc/openvpn/openvpn.run')
-    # os.system(r'/etc/openvpn/openvpn.run')
-    return HttpResponse("服务启动成功！")
 
 config_file_content = []
 
