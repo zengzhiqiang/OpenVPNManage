@@ -34,6 +34,7 @@ def restart(request):
     '''
     重启openvpn服务
     '''
+    os.system(r'/etc/openvpn/killopenvpn.sh')
     start_openvpn_thread = threading.Thread(target=start_openvpn_fun)
     start_openvpn_thread.start()
     return HttpResponse("服务重启成功！")
