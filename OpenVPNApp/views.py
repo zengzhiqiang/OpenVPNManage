@@ -34,7 +34,8 @@ def restart(request):
     '''
     重启openvpn服务
     '''
-    subprocess.Popen(r'/etc/openvpn/openvpn.run')
+    start_openvpn_thread = threading.Thread(target=start_openvpn_fun)
+    start_openvpn_thread.start()
     return HttpResponse("服务重启成功！")
 
 def download_config_file(request):
