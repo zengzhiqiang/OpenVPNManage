@@ -13,6 +13,10 @@
     <a href={% url "OpenVPNApp:changePort" %}>修改端口</a>
     <br></br>
     <a href={% url "OpenVPNApp:downloadConfigFile" %}>下载最新配置文件</a>
+    <br></br>
+    <a href={% url "OpenVPNApp:downloadClientWin" %}>下载win客户端</a>
+    <br></br>
+    <a href={% url "OpenVPNApp:downloadClientMac" %}>下载mac客户端</a>
     <p>{{ message }}</p>
     <br></br>
     <p>vpn端口一般一到两天会更新一次，如果无法连接上服务器，请先确认自己的客户端配置文件的端口是否正确！</p>

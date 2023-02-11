@@ -59,6 +59,28 @@ def download_config_file(request):
     response["Content-Disposition"] = "attachment; filename=" + os.path.basename(filepath)
     return response
 
+def download_client_win(request):
+    print("下载客户端")
+    filepath=(r"/home/OpenvpnManage/OpenVPNManage/media/OpenVPN-2.5.5-I602-amd64.msi")
+    # filepath=(r"D:\OpenVPNManage\OpenvpnManage\media\OpenVPN-2.5.5-I602-amd64.msi")
+    f = open(filepath, "rb")
+    response = FileResponse(f)
+    f.close
+    response["content_type"] = "application/octet-stream"
+    response["Content-Disposition"] = "attachment; filename=" + os.path.basename(filepath)
+    return response
+
+def download_client_mac(request):
+    print("下载客户端")
+    filepath=(r"/home/OpenvpnManage/OpenVPNManage/media/openvpn-connect-3.3.6.4368_signed.dmg")
+    # filepath=(r"D:\OpenVPNManage\OpenvpnManage\media\openvpn-connect-3.3.6.4368_signed.dmg")
+    f = open(filepath, "rb")
+    response = FileResponse(f)
+    f.close
+    response["content_type"] = "application/octet-stream"
+    response["Content-Disposition"] = "attachment; filename=" + os.path.basename(filepath)
+    return response
+
 def start_openvpn_fun():
     # 运行linux重启服务的脚本
     os.system(r'/etc/openvpn/startopenvpn.sh')
