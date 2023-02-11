@@ -11,22 +11,5 @@
     <a href={% url "OpenVPNApp:changePort" %}>修改端口</a>
     <a href={% url "OpenVPNApp:downloadConfigFile" %}>下载最新配置文件</a>
     <p>{{ message }}</p>
-
-    <form onsubmit="handleSubmit(event)">
-        <input type="text" id="name" name="name" required />
-        <button type="submit">Submit</button>
-      </form>
-      
-      <script>
-      function handleSubmit(event) {
-        event.preventDefault();
-        const formData = new FormData(event.target);
-        const name = formData.get("name");
-        console.log(`Name: ${name}`);
-      
-        // make a post request to the server with the form data
-      }
-      </script>
-      
 </body>
 </html>

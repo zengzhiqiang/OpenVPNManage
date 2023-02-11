@@ -25,7 +25,8 @@ def index(request):
         content = f.readlines()
         config_file = eval("".join(content))
     context = {
-        "port": str(config_file["port"])
+        "port": str(config_file["port"]),
+        "message": ""
     }
     return HttpResponse(template.render(context, request))
 
