@@ -19,4 +19,5 @@ from django.urls import path, include
 urlpatterns = [
     path('openvpn/', include('OpenVPNApp.urls')),
     path('admin/', admin.site.urls),
+    path('wechat/', include('WXPublic.urls')),
 ]

@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # 我自己的app
-    'OpenVPNApp'
+    'OpenVPNApp',
+    'WXPublic'
 ]
 
 MIDDLEWARE = [
