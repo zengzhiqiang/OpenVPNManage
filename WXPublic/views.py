@@ -79,7 +79,7 @@ def wx(request):
         # 定时功能，超出4.5s后先给用户返回消息 优先级往后排
         
         # 这里需要一个返回用户消息的函数
-        content = ('你发送了这些内容：' + msg_from_user.Content).encode('UTF-8')
+        content = ('你发送了这些内容：' + msg_from_user.Content)
         to_user = msg_from_user.FromUserName
         from_user = msg_from_user.ToUserName
         send_msg = SendMsg(to_user, from_user, content)
