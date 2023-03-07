@@ -12,7 +12,7 @@ import hashlib
 
 import openai
 
-openai.api_key = "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"
+openai.api_key = "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"
 
 
 def chat_gpt_mix(content):
@@ -93,7 +93,7 @@ def wx(request):
         # 这里需要一个返回用户消息的函数
         to_user = msg_from_user.FromUserName
         from_user = msg_from_user.ToUserName
-        content = chat_gpt_mix(msg_from_user.Content)
+        content = chat_gpt_mix(msg_from_user.Content)[2:]
         send_msg = SendMsg(to_user, from_user, content)
         return HttpResponse(content=send_msg.send())
     
