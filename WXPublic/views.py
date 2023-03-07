@@ -12,7 +12,10 @@ import hashlib
 
 import openai
 
-openai.api_key = "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"
+
+with open(r'key.key', 'r', encoding="UTF_8") as f:
+    
+    openai.api_key = f.readline()
 
 
 def chat_gpt_mix(content):
