@@ -13,6 +13,7 @@ import hashlib
 import openai
 
 
+
 with open(r'key.key', 'r', encoding="UTF_8") as f:
     
     openai.api_key = f.readline()
@@ -74,6 +75,25 @@ class SendMsg():
             """
         return XmlForm.format(**self.__dict)
 
+class TransferCustomerService():
+    def __init__(self, toUserName, fromUserName):
+        self.__dict = dict()
+        self.__dict['ToUserName'] = toUserName
+        self.__dict['FromUserName'] = fromUserName
+        self.__dict['CreateTime'] = int(time.time())
+
+    def send(self):
+        XmlForm = """
+            <xml>
+                <ToUserName><![CDATA[{ToUserName}]]></ToUserName>
+                <FromUserName><![CDATA[{FromUserName}]]></FromUserName>
+                <CreateTime>{CreateTime}</CreateTime>
+                <MsgType><![CDATA[transfer_customer_service]]></MsgType>
+            </xml>
+            """
+        return XmlForm.format(**self.__dict)
+    
+
 def wx(request):
     # 用于验证微信服务器
     if request.method == "GET":
@@ -107,7 +127,8 @@ def wx(request):
         # 这里需要一个返回用户消息的函数
         to_user = msg_from_user.FromUserName
         from_user = msg_from_user.ToUserName
-        content = chat_gpt_dav(msg_from_user.Content)[2:]
-        send_msg = SendMsg(to_user, from_user, content)
-        return HttpResponse(content=send_msg.send())
-    
+        # content = chat_gpt_dav(msg_from_user.Content).strip()
+        # content = 'success'
+        # send_msg = SendMsg(to_user, from_user, content)
+        transfer_customer_service = TransferCustomerService(to_user, from_user)  
+        return HttpResponse(content=transfer_customer_service)
