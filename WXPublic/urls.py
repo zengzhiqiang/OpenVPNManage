@@ -7,6 +7,7 @@ app_name = "OpenVPNApp"
 urlpatterns = [
     path('wx', views.wx, name='wx'),
     re_path('wx?P<signature>&?P<echostr>&?P<timestamp>&?P<nonce>', views.wx, name='wx'),
+    path('gettoken', views.get_token, name='gettoken'),
 ]
 
 # urlpatterns = [
