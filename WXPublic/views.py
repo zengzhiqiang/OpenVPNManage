@@ -81,6 +81,7 @@ class TransferCustomerService():
         self.__dict['ToUserName'] = toUserName
         self.__dict['FromUserName'] = fromUserName
         self.__dict['CreateTime'] = int(time.time())
+        # self.__dict['TransfeCustomerService'] = "transfer_customer_service"
 
     def send(self):
         XmlForm = """
@@ -130,5 +131,8 @@ def wx(request):
         # content = chat_gpt_dav(msg_from_user.Content).strip()
         # content = 'success'
         # send_msg = SendMsg(to_user, from_user, content)
-        transfer_customer_service = TransferCustomerService(to_user, from_user)  
+        transfer_customer_service = TransferCustomerService(to_user, from_user).send()
         return HttpResponse(content=transfer_customer_service)
+        # return HttpResponse("success")
+    
+
