@@ -14,15 +14,14 @@ def get_token_wx(path):
         settings = f.readlines()
         AppID = settings[0].strip()
         AppSecret = settings[1].strip()
-        print(AppID, AppSecret)
     url_base = "https://api.weixin.qq.com/cgi-bin/token?grant_type={0}&appid={1}&secret={2}".format("client_credential", AppID, AppSecret)
     while True:
-        print(url_base)
         wx_token_data_response = rq.urlopen(url=url_base)
         wx_token_data = wx_token_data_response.read().decode("UTF-8")
         wx_token = json.loads(wx_token_data)
         try:
             access_token = wx_token["access_token"]
+            print(access_token)
             with open("wxToken.token", "w", encoding="UTF-8") as f:
                 f.write(access_token)
         except:
