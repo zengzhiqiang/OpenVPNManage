@@ -21,8 +21,8 @@ def get_token_wx(path):
         wx_token = json.loads(wx_token_data)
         try:
             access_token = wx_token["access_token"]
-            print(access_token)
             with open("wxToken.token", "w", encoding="UTF-8") as f:
+                print(access_token)
                 f.write(access_token)
         except:
             print("access_token获取失败，微信服务器回复如下！")
