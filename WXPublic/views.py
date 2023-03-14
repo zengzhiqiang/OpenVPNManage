@@ -125,7 +125,7 @@ def reply_to_client(content, to_user):
     }
     print(reply_content)
     req = requests.post(url=url, data=json.dumps(data))
-    print(req)
+    print(req.text)
 
 
 
