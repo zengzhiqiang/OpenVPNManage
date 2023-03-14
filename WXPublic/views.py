@@ -110,7 +110,7 @@ def get_token(request):
 
 
 def reply_to_client(content, to_user):
-    reply_content = chat_gpt_dav(content=content).strip()
+    reply_content = chat_gpt_dav(content=content).encoding("UTF-8")
     access_token = ""
     with open("wxToken.token", "r", encoding="UTF=8") as f:
         access_token = f.readline()
