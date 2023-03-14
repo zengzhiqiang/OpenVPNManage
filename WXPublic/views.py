@@ -110,7 +110,7 @@ def get_token(request):
 
 
 def reply_to_client(content, to_user):
-    reply_content = chat_gpt_dav(content=content).encoding("UTF-8")
+    reply_content = chat_gpt_dav(content=content)
     access_token = ""
     with open("wxToken.token", "r", encoding="UTF=8") as f:
         access_token = f.readline()
@@ -120,18 +120,20 @@ def reply_to_client(content, to_user):
         "msgtype":"text",
         "text":
         {
-            "content": reply_content
+            "content": content
         }
     }
-    headers = {
-        "Content-type": "application/json",
-        "charset": "utf-8"
-    }
-    print(reply_content)
-    req = requests.post(url=url, data=json.dumps(data), headers=headers)
+    # headers = {
+    #     "Accept": "application/json",
+    #     "Accept-Charset": "UTF-8",
+    #     "Accept-Encoding": ""
+    # }
+    # print(reply_content)
+    req = requests.post(url=url, data=json.dumps(data, ensure_ascii=False).encode('utf-8'))
     print(req.text)
 
 
+    
 
 def wx(request):
     # 用于处理微信服务器发来的请求
