@@ -110,8 +110,7 @@ def get_token(request):
 
 
 def reply_to_client(content, to_user):
-    # reply_content = chat_gpt_dav(content=content).strip()
-    # print(type(reply_content))
+    reply_content = chat_gpt_dav(content=content).strip()
     access_token = ""
     with open("wxToken.token", "r", encoding="UTF=8") as f:
         access_token = f.readline()
@@ -121,14 +120,14 @@ def reply_to_client(content, to_user):
         "msgtype":"text",
         "text":
         {
-            "content": "你好"
+            "content": reply_content
         }
     }
     headers = {
         "Content-type": "application/json",
         "charset": "utf-8"
     }
-    # print(reply_content)
+    print(reply_content)
     req = requests.post(url=url, data=json.dumps(data), headers=headers)
     print(req.text)
 
