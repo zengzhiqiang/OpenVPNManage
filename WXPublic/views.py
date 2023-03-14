@@ -120,7 +120,7 @@ def reply_to_client(content, to_user):
         "msgtype":"text",
         "text":
         {
-            "content": content
+            "content": reply_content
         }
     }
     # headers = {
