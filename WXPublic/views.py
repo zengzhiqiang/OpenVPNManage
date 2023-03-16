@@ -36,7 +36,7 @@ def chat_gpt_mix(content):
         )
         return completion.choices[0].message.content + "\n\n注：本次回答由 gpt-3.5-turbo-0301 生成"
     except:
-        return chat_gpt_dav(content) + "\n\n本次回答由 text-davinci-003 生成"
+        return chat_gpt_dav(content) + "\n\n注：本次回答由 text-davinci-003 生成"
 
 def chat_gpt_dav(content):
     completion = openai.Completion.create(
