@@ -27,13 +27,16 @@ with open(r'key.key', 'r', encoding="UTF_8") as f:
 
 def chat_gpt_mix(content):
     
-    completion = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role":"user", "content": content}
-        ]
-    )
-    return completion.choices[0].message.content
+    try:
+        completion = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo-0301",
+            messages=[
+                {"role":"user", "content": content}
+            ]
+        )
+        return completion.choices[0].message.content + "\n\n注：本次回答由 gpt-3.5-turbo-0301 生成"
+    except:
+        return chat_gpt_dav(content) + "\n\n本次回答由 text-davinci-003 生成"
 
 def chat_gpt_dav(content):
     completion = openai.Completion.create(
@@ -110,7 +113,8 @@ def get_token(request):
 
 
 def reply_to_client(content, to_user):
-    reply_content = chat_gpt_dav(content=content).strip()
+    reply_content = chat_gpt_mix(content=content).strip()
+    print(reply_content)
     access_token = ""
     with open("wxToken.token", "r", encoding="UTF=8") as f:
         access_token = f.readline()
