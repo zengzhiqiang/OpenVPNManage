@@ -130,7 +130,7 @@ def reply_to_client(message, to_user):
         "msgtype":"text",
         "text":
         {
-            "content": reply_content + r"\n\n注：本次回答由" + chat_model + "生成"
+            "content": reply_content + "\n\n注：本次回答由" + chat_model + "生成"
         }
     }
     req = requests.post(url=url, data=json.dumps(data, ensure_ascii=False).encode('utf-8'))
