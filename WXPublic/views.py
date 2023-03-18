@@ -147,10 +147,15 @@ def get_chat_histry(user_id):
     limit_time = datetime.datetime.now() - datetime.timedelta(minutes=10)
     utc_limit_time = limit_time.astimezone(tz=utc)
     print(utc_limit_time)
-    user_chat_content = ChatContent.objects.exclude(user_id=user_id, chat_time__lte=utc_limit_time)[:]
+    user_chat_content = ChatContent.objects.exclude(user_id=user_id, chat_time__lte=utc_limit_time)
     for data in user_chat_content:
         message.append({"role": data.role, "content": data.content})
-    print(message[-10:])
+    message = message[-10:]
+    while len(str(message)) > 1500:
+        i = -9
+        message = message[i:]
+        i = i - 1
+    print(message)
     return message
     
 
