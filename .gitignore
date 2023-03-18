@@ -157,3 +157,5 @@ wxGetToken/wxpublic.setting
 wxpublic.setting
 wxToken.token
 wxpublic-个人号.setting
+
+*/migrations/*

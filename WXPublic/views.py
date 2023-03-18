@@ -7,6 +7,10 @@ from xml.etree import ElementTree
 
 import time
 
+import datetime
+
+import pytz
+
 import hashlib
 
 from urllib import request
@@ -15,28 +19,29 @@ import openai
 
 import threading
 
-from .wxGetToken import get_token_wx
+from WXPublic.wxGetToken import get_token_wx
 
 import requests
+
 import json
+
+from .models import ChatContent
 
 
 with open(r'key.key', 'r', encoding="UTF_8") as f:
     
     openai.api_key = f.readline()
 
-def chat_gpt_mix(content):
+def chat_gpt_mix(message):
     
     try:
         completion = openai.ChatCompletion.create(
             model="gpt-3.5-turbo-0301",
-            messages=[
-                {"role":"user", "content": content}
-            ]
+            messages=message
         )
-        return completion.choices[0].message.content + "\n\n注：本次回答由 gpt-3.5-turbo-0301 生成"
+        return completion.choices[0].message.content.strip(), "gpt-3.5-turbo-0301"
     except:
-        return chat_gpt_dav(content) + "\n\n注：本次回答由 text-davinci-003 生成"
+        return chat_gpt_dav(message[-1]("content")).strip(), "text-davinci-003"
 
 def chat_gpt_dav(content):
     completion = openai.Completion.create(
@@ -112,8 +117,9 @@ def get_token(request):
     return HttpResponse("获取token成功")
 
 
-def reply_to_client(content, to_user):
-    reply_content = chat_gpt_mix(content=content).strip()
+def reply_to_client(message, to_user):
+    reply_content, chat_model = chat_gpt_mix(message=message)
+    ChatContent.objects.create(role="assistant", content=reply_content, user_id=to_user, chat_model=chat_model)
     print(reply_content)
     access_token = ""
     with open("wxToken.token", "r", encoding="UTF=8") as f:
@@ -124,20 +130,33 @@ def reply_to_client(content, to_user):
         "msgtype":"text",
         "text":
         {
-            "content": reply_content
+            "content": reply_content + r"\n\n注：本次回答由" + chat_model + "生成"
         }
     }
-    # headers = {
-    #     "Accept": "application/json",
-    #     "Accept-Charset": "UTF-8",
-    #     "Accept-Encoding": ""
-    # }
-    # print(reply_content)
     req = requests.post(url=url, data=json.dumps(data, ensure_ascii=False).encode('utf-8'))
     print(req.text)
 
-
+def get_chat_histry(user_id):
+    '''
+    支持最多五次对话
+    最大字数校验 < 4000 字 (未完成)
+    时间校验，最多向上追溯十分钟的提问。
+    '''
+    message = []
+    utc = pytz.timezone("UTC")
+    limit_time = datetime.datetime.now() - datetime.timedelta(minutes=10)
+    utc_limit_time = limit_time.astimezone(tz=utc)
+    print(utc_limit_time)
+    user_chat_content = ChatContent.objects.exclude(user_id=user_id, chat_time__lte=utc_limit_time)[:]
+    for data in user_chat_content:
+        message.append({"role": data.role, "content": data.content})
+    print(message[-10:])
+    return message
     
+
+def test(request):
+    get_chat_histry("fromUser")
+    return HttpResponse("test")
 
 def wx(request):
     # 用于处理微信服务器发来的请求
@@ -180,10 +199,14 @@ def wx(request):
         to_user = msg_from_user.FromUserName
         from_user = msg_from_user.ToUserName
         content = msg_from_user.Content
-        reply_thread = threading.Thread(target=reply_to_client, args=(content, to_user))
+        ChatContent.objects.create(role="user", content=content, user_id=to_user, chat_model="Me")
+        
+        '''这里需要放置一个获取历史对话的方法，将历史对话打包为入参传给 chat-gpt 调用函数'''
+        message = get_chat_histry(user_id=to_user)
+        
+        reply_thread = threading.Thread(target=reply_to_client, args=(message, to_user))
         reply_thread.start()
         # 将客户消息转发至客服系统
         transfer_customer_service = TransferCustomerService(to_user, from_user).send()
         return HttpResponse(content=transfer_customer_service)
     
-
