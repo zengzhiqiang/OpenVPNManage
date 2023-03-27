@@ -153,6 +153,7 @@ def get_chat_histry(user_id):
     message = message[-10:]
     i = -9
     while len(str(message)) > 1500:
+        # 超过1500哥字符就减少上下文的传递
         message = message[i:]
         i = i + 1
     print(message)
