@@ -51,7 +51,7 @@ def restart(request):
 
 def download_config_file(request):
     print("下载配置文件")
-    filepath=(r"/home/OpenvpnManage/OpenVPNManage/media/client.ovpn")
+    filepath=(r"media/client.ovpn")
     f = open(filepath, "rb")
     response = FileResponse(f)
     f.close
@@ -61,7 +61,7 @@ def download_config_file(request):
 
 def download_client_win(request):
     print("下载客户端")
-    filepath=(r"/home/OpenvpnManage/OpenVPNManage/media/OpenVPN-2.5.5-I602-amd64.msi")
+    filepath=(r"media/OpenVPN-2.5.5-I602-amd64.msi")
     # filepath=(r"D:\OpenVPNManage\OpenvpnManage\media\OpenVPN-2.5.5-I602-amd64.msi")
     f = open(filepath, "rb")
     response = FileResponse(f)
@@ -72,7 +72,7 @@ def download_client_win(request):
 
 def download_client_mac(request):
     print("下载客户端")
-    filepath=(r"/home/OpenvpnManage/OpenVPNManage/media/openvpn-connect-3.3.6.4368_signed.dmg")
+    filepath=(r"media/openvpn-connect-3.3.6.4368_signed.dmg")
     # filepath=(r"D:\OpenVPNManage\OpenvpnManage\media\openvpn-connect-3.3.6.4368_signed.dmg")
     f = open(filepath, "rb")
     response = FileResponse(f)
