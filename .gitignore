@@ -159,3 +159,4 @@ wxToken.token
 wxpublic-个人号.setting
 
 */migrations/*
+setting.json
