@@ -28,6 +28,12 @@ def index(request):
         "port": str(config_file["port"]),
         "message": ""
     }
+    if request.META.get('HTTP_X_FORWARDED_FOR'):
+        ip = request.META.get("HTTP_X_FORWARDED_FOR")
+    else:
+        ip = request.META.get("REMOTE_ADDR")
+
+    print("ip : ", ip)
     return HttpResponse(template.render(context, request))
 
 def restart(request):
